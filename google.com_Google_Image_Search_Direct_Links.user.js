@@ -2,7 +2,7 @@
 // @name         Google Image Search Direct Links
 // @namespace    https://romibi.ch/
 // @downloadURL  https://raw.githubusercontent.com/romibi/MyUserscripts/master/google.com_Google_Image_Search_Direct_Links.user.js
-// @version      0.4
+// @version      0.5
 // @description  Add Direct Links to Google Image Search back...
 // @author       romibi
 // @include      /^https?:\/\/(.*\.)?google..*\/search\?.*/
@@ -27,12 +27,26 @@
         }
     };
 
-    let images = $(".rg_l");
-    images.each(function(i, elem) {
-        $(elem).click(function() {
-            updateLink(elem);
+    let updateImages = function() {
+        let images = $(".rg_l");
+        images.each(function(i, elem) {
+            $(elem).click(function() {
+                updateLink(elem);
+            });
         });
-    });
+    };
+    updateImages();
+
+    // onXMLHttpRequest by https://stackoverflow.com/a/629724
+    XMLHttpRequest.prototype.realOpen = XMLHttpRequest.prototype.open;
+    let myOpen = function(method, url, async, user, password) {
+        console.log("xmlhttprequest: "+url);
+        if(url.startsWith("/search?")) {
+            setTimeout(updateImages, 500);
+        }
+        this.realOpen (method, url, async, user, password);
+    };
+    XMLHttpRequest.prototype.open = myOpen;
 
     setTimeout(updateLink, 1000);
 })();
