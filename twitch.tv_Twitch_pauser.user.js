@@ -2,7 +2,7 @@
 // @name         Twitch pauser
 // @namespace    https://romibi.ch/
 // @downloadURL  https://raw.githubusercontent.com/romibi/MyUserscripts/master/twitch.tv_Twitch_pauser.user.js
-// @version      0.5
+// @version      0.6
 // @description  Pause the autoplaying video on Twitch.tv based on: https://webapps.stackexchange.com/a/106767
 // @author       romibi
 // @match        https://www.twitch.tv/*
@@ -14,22 +14,38 @@
 
     var attempts = 50;
     var playerDivSelector = ".front-page-carousel .player"
+    var playPauseSelector = ".qa-pause-play-button";
+    var streamStatusSelector = ".player-streamstatus";
 
     var attemptsLeft = attempts;
     var wantedPauseStatus = null;
     var myInterval = null;
     var registeredPlayPauseEvent = false;
+    var debugLog = false;
+
+    var log = function(text) {
+        if(debugLog) {
+            console.log("TwitchPauser: "+text);
+        }
+    }
 
     var getPlayPause = function() {
         var playerdiv = document.querySelector(playerDivSelector);
         if(playerdiv !== null) {
-            var playPause = playerdiv.querySelector(".qa-pause-play-button");
+            var playPause = playerdiv.querySelector(playPauseSelector);
             if(!registeredPlayPauseEvent) {
                 playPause.addEventListener("click", updateWantedPauseStatus );
             }
             return playPause;
         }
         return null;
+    }
+
+    var getStreamStatus = function() {
+        var playerdiv = document.querySelector(playerDivSelector);
+        if(playerdiv !== null) {
+            return playerdiv.querySelector(streamStatusSelector);
+        }
     }
 
     var updateWantedPauseStatus = function() {
@@ -45,15 +61,31 @@
         return playPauseLabel !== "Pause";
     }
 
+    var isOffline = function() {
+        var streamStatus = getStreamStatus();
+        if(streamStatus===null) return null;
+        var streamStatusTip = streamStatus.querySelector(".player-tip").getAttribute("data-tip");
+        return streamStatusTip === "offlineStatus";
+    }
+
     var myIntervalFunction = function() {
         var playPause = getPlayPause();
         if(playPause !== null) {
-            if(!isPaused()) {
+            if(!isPaused() && !isOffline()) {
+                log("click");
                 playPause.click();
-                clearInterval(myInterval);
+                setTimeout(function() {
+                    if(isPaused()) {
+                        log("success");
+                        clearInterval(myInterval);
+                    } else {
+                        log("fail");
+                    }
+                },80);
             }
         } else {
             if(attemptsLeft--<0) {
+                log("giveup");
                 clearInterval(myInterval);
             }
         }
