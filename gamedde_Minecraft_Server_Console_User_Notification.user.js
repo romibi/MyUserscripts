@@ -2,7 +2,7 @@
 // @name         Minecraft User Joined Notification
 // @namespace    http://romibi.ch/
 // @downloadURL  https://raw.githubusercontent.com/romibi/MyUserscripts/master/gamedde_Minecraft_Server_Console_User_Notification.user.js
-// @version      0.1
+// @version      0.2
 // @description  Get Notified when a new user joined!
 // @author       romibi
 // @match        https://wsproxy.united-gameserver.de:8080/console/*/
@@ -78,5 +78,6 @@ window.WebSocket = function (a, b) {
 };
 
 window.WebSocket.prototype=ws.prototype;
+window.WebSocket.OPEN = 1; // Apparently gamed (or a used lib) defined some custom constants …
 
 }());
