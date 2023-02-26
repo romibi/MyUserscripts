@@ -2,7 +2,7 @@
 // @name         ToTK Spoiler Blocker
 // @namespace    https://romibi.ch/
 // @downloadURL  https://raw.githubusercontent.com/romibi/MyUserscripts/master/ToTK_spoiler_blocker.user.js
-// @version      0.1
+// @version      0.1.1
 // @description  Prevent TotK spoilers
 // @author       romibi
 // @match        *://*/*
@@ -30,7 +30,8 @@
           ]
         ],
         ['youtube.com', 'div.ytd-rich-item-renderer, .ytd-rich-shelf-renderer, div.ytd-expanded-shelf-contents-renderer, ytd-grid-video-renderer>.ytd-grid-video-renderer'],
-        ['twitter.com', 'article .r-18u37iz > div > .css-1dbjc4n + .css-1dbjc4n']
+        ['twitter.com', 'article .r-18u37iz > div > .css-1dbjc4n + .css-1dbjc4n'],
+        ['twitch.tv', '.chat-line__message']
     ];
     let spoilerWarningKeywords = [
 //// trigger testing keywords
