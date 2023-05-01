@@ -2,7 +2,7 @@
 // @name         ToTK Spoiler Blocker
 // @namespace    https://romibi.ch/
 // @downloadURL  https://raw.githubusercontent.com/romibi/MyUserscripts/master/ToTK_spoiler_blocker.user.js
-// @version      0.1.1
+// @version      0.1.2
 // @description  Prevent TotK spoilers
 // @author       romibi
 // @match        *://*/*
@@ -100,9 +100,11 @@
             }
             let postContent = getContentText(elem).toLowerCase();
             if(findKeywords(postContent, spoilerDetectionKeywords)) {
-                addSpoilerWarningToPost(elem, 'romibi-danger', 'This likely contains Spoilers for "The&nbsp;Legend&nbsp;of&nbsp;Z&#xfeff;elda: T&#xfeff;ears&nbsp;of&nbsp;the&nbsp;K&#xfeff;ingdom"!!<br/>Doubleclick to show anyways!', true);
+                //addSpoilerWarningToPost(elem, 'romibi-danger', 'This likely contains Spoilers for "The&nbsp;Legend&nbsp;of&nbsp;Z&#xfeff;elda: T&#xfeff;ears&nbsp;of&nbsp;the&nbsp;K&#xfeff;ingdom"!!<br/>Doubleclick to show anyways!', true);
+                addSpoilerWarningToPost(elem, 'romibi-danger', 'This mentions "The&nbsp;Legend&nbsp;of&nbsp;Z&#xfeff;elda: T&#xfeff;ears&nbsp;of&nbsp;the&nbsp;K&#xfeff;ingdom"!<br/>Be aware of potential Spoilers!<br/>Doubleclick to show anyways!', true);
             } else if(findKeywords(postContent, spoilerWarningKeywords)) {
-                addSpoilerWarningToPost(elem, 'romibi-warning', 'This mentions "The&nbsp;Legend&nbsp;of&nbsp;Z&#xfeff;elda: T&#xfeff;ears&nbsp;of&nbsp;the&nbsp;K&#xfeff;ingdom"!<br/>Be aware of potential Spoilers!<br/>Click to show anyways!', false);
+                //addSpoilerWarningToPost(elem, 'romibi-warning', 'This mentions "The&nbsp;Legend&nbsp;of&nbsp;Z&#xfeff;elda: T&#xfeff;ears&nbsp;of&nbsp;the&nbsp;K&#xfeff;ingdom"!<br/>Be aware of potential Spoilers!<br/>Click to show anyways!', false);
+                addSpoilerWarningToPost(elem, 'romibi-warning', 'This mentions "The&nbsp;Legend&nbsp;of&nbsp;Z&#xfeff;elda"!<br/>Be aware of potential Spoilers!<br/>Click to show anyways!', false);
             }
         });
     }
@@ -205,7 +207,7 @@
     function showSpoilerDangerFullscreen() {
         unRegisterContentLoadListener();
         $('body').append(`<div id="romibi-spoiler-firewall-danger" class="romibi-spoiler-firewall romibi-hideable romibi-danger">
-                <span>This Site likely contains Spoilers for "The&nbsp;Legend&nbsp;of&nbsp;Z&#xfeff;elda: T&#xfeff;ears&nbsp;of&nbsp;the&nbsp;K&#xfeff;ingdom"!!<br/>Doubleclick to show anyways!</span>
+                <span>This Site mentions "The&nbsp;Legend&nbsp;of&nbsp;Z&#xfeff;elda: T&#xfeff;ears&nbsp;of&nbsp;the&nbsp;K&#xfeff;ingdom"!!<br/>Be aware of potential Spoilers!<br/>Doubleclick to show anyways!</span>
             </div>`);
         hideSpoilerFirewall();
         $('#romibi-spoiler-firewall-danger').dblclick(function() {
@@ -224,7 +226,7 @@
     function showSpoilerWarningFullscreen() {
         unRegisterContentLoadListener();
         $('body').append(`<div id="romibi-spoiler-firewall-warning" class="romibi-spoiler-firewall romibi-hideable romibi-warning">
-                             <span>This Site mentions "The&nbsp;Legend&nbsp;of&nbsp;Z&#xfeff;elda: T&#xfeff;ears&nbsp;of&nbsp;the&nbsp;K&#xfeff;ingdom"!<br/>Be aware of potential Spoilers!<br/>Click to show anyways!</span></div>`);
+                             <span>This Site mentions "The&nbsp;Legend&nbsp;of&nbsp;Z&#xfeff;elda"!<br/>Be aware of potential Spoilers!<br/>Click to show anyways!</span></div>`);
         hideSpoilerFirewall();
         $('#romibi-spoiler-firewall-warning').click(function() {
             hideSpoilerFirewall('#romibi-spoiler-firewall-warning');
