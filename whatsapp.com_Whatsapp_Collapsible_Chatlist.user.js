@@ -2,7 +2,7 @@
 // @name         Whatsapp Collapsible Chatlist
 // @namespace    http://romibi.ch/
 // @downloadURL  https://raw.githubusercontent.com/romibi/MyUserscripts/master/whatsapp.com_Whatsapp_Collapsible_Chatlist.user.js
-// @version      25.01.28
+// @version      25.01.29
 // @description  Make the chatlist of whatsapp collapsible
 // @author       romibi
 // @match        https://web.whatsapp.com/
@@ -59,7 +59,7 @@
             overflow: hidden;
           }
 
-          .romibi-chat-uncollapse-btn.romibi-hidden {
+          .romibi-chat-uncollapse-btn.romibi-hidden, body.dark .romibi-chat-uncollapse-btn.romibi-hidden {
             transition: height 0.75s ease-in-out, padding 0.75s ease-in-out, margin 0.75s ease-in-out, border 0.75s ease-in-out;
             height:  0px;
             padding-top: 0px;
